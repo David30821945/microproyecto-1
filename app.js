@@ -1,19 +1,21 @@
-// Globals 
+// Globals
 let playerBoards = {
   player1: [],
   player2: [],
   player3: [],
   player4: [],
 };
-let playerScores ={
+let playerScores = {
   player1: 0,
   player2: 0,
   player3: 0,
-  player4: 0
+  player4: 0,
+};
+let winScore = JSON.parse(localStorage.getItem("winScore"));
 
-}
 let ArrayGlobal = createBingoArray();
-let selectedNumnbers = [];
+let selectedNumbers = [];
+
 
 // ========================================
 
@@ -82,14 +84,55 @@ function pickRandomFromBingoArray(array) {
 
 function generateNumber() {
   let number = pickRandomFromBingoArray(ArrayGlobal);
-  // 1. Marcar el numero en el carton del jugador (si existe) 
-  // 2. Calcular puntajes 
-  return number;
+  selectedNumnbers.push(number);
+  calculateScores();
+  document.getElementById('selectedNumbers').innerHTML = selectedNumbers.toString();
+  document.getElementById('turnCount').innerHTML = selectedNumbers.length;
 }
 
 function calculateScores() {
-  const size = playerBoards.player1.length; 
+  let score = 0;
+  let scorediagonal = 0;
 
+  const size = playerBoards.player1.length;
+  let rows =[];
+  let columns = [];
+  let diagonal1 = [];
+  let diagonal2 = [];
+  playerBoards.player1[0];
+  for (let i = 0; i < size; i++) {
+    diagonal1 = playerBoards.player1[i][i];
+    diagonal2 = playerBoards.player1[i][size - 1 - i];
+    rows.push(playerBoards.player1[i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |  
+    for (let j = 0; j < size; j++) {
+      columns[i] = [];
+      columns[i].push(playerBoards.player1[j][i]);
+    }
+  }
+  playerScores.player1 = 0;
+  // Lineas 
+  rows.forEach((row) => {
+    const hasLine = row.every((cell) => selectedNumbers.includes(cell)) // Every: si todos los elementos cumplen con la condicion devuelve true, sino false
+    if(hasLine) playerScores.player1 += 1;
+  });
+
+  // Columnas
+  columns.forEach((row) => {
+    const hasLine = row.every((cell) => selectedNumbers.includes(cell));
+    if(hasLine) playerScores.player1 += 1;
+  });
+
+  // Size * 2 Lleno todas las rows y todas las lineas. 
+  if(playerScores.player1 === (size * 2)){
+    victoriaJugador(1);
+  }
+
+  // Diagonals 
+  [diagonal1, diagonal2].forEach((row) => {
+    const hasLine = row.every((cell) => selectedNumbers.includes(cell));
+    if(hasLine) playerScores.player1 += 3;
+  });
+  
 }
 
 function createBingoArray() {
@@ -101,7 +144,12 @@ function restart() {
 }
 
 function victoriaJugador(playerNumber) {
-  const scores = JSON.parse(localStorage.getItem("playerScores"));
-  scores["player" + playerNumber] += 1;
-  localStorage.setIem("playerScores", JSON.stringify(scores));  
+  const scores = JSON.parse(localStorage.getItem("winScore"));
+  const playerId = document.getElementById('player' + playerNumber + 'Name').value;
+  if(!scores[playerId]){
+    scores[playerId] = 0;
+  }
+  scores[playerId] += 1;
+  localStorage.setItem("winScore", JSON.stringify(scores));
+  restart();
 }
