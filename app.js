@@ -1,12 +1,22 @@
+// Globals 
 let playerBoards = {
   player1: [],
   player2: [],
   player3: [],
   player4: [],
 };
+let playerScores ={
+  player1: 0,
+  player2: 0,
+  player3: 0,
+  player4: 0
 
+}
 let ArrayGlobal = createBingoArray();
 let selectedNumnbers = [];
+
+// ========================================
+
 function iniciarBingo() {
   const startButton = document.getElementById("startButton");
   startButton.style.display = "none";
@@ -79,6 +89,7 @@ function generateNumber() {
 
 function calculateScores() {
   const size = playerBoards.player1.length; 
+
 }
 
 function createBingoArray() {
@@ -87,4 +98,10 @@ function createBingoArray() {
 
 function restart() {
   ArrayGlobal = createBingoArray();
+}
+
+function victoriaJugador(playerNumber) {
+  const scores = JSON.parse(localStorage.getItem("playerScores"));
+  scores["player" + playerNumber] += 1;
+  localStorage.setIem("playerScores", JSON.stringify(scores));  
 }
