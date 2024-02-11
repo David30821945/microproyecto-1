@@ -1,0 +1,74 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #d8f3dc;
+  margin: 0;
+  padding: 0;
+}
+
+.El-Bingo{
+  color:blue
+}
+
+.bingo-container-init {
+  text-align: center;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #1a4570; /* Azul oscuro para títulos */
+}
+
+.player-names, .board-size, .Reset-game, .turn-counter {
+  margin-top: 20px;
+}
+
+input, button {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+button {
+  background-color: #1a4570; /* Azul oscuro para botones */
+  color: white;
+  border: none;
+  padding: 15px 30px; 
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px; 
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #15345c; /* Cambia el color al pasar el mouse sobre el botón */
+}
+
+#turnCount {
+  font-size: 20px; 
+}
+
+.player-names input {
+  width: 300px;
+  padding: 5px; 
+  margin-top: 5px;
+  margin-bottom: 5px; 
+}
+
+.seccion_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; 
+}
+
+.board-size,
+.Reset-game,
+.turn-counter {
+  flex: 1;
+  margin-right: 10px; 
+}
+
+.board-size {
+  display: none;
+}
+
