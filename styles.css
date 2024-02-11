@@ -68,7 +68,29 @@ button:hover {
   margin-right: 10px; 
 }
 
+table tr { 
+  padding: 2px 0;
+}
+
+table td { 
+  padding: 5px;
+  border: 1px solid black;
+  text-align: center;
+}
+
 .board-size {
   display: none;
 }
+table {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
 
+
+.bingo-game h2 {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 3px;
+  font-weight: 400;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
