@@ -61,6 +61,7 @@ function createTable(playerId, size) {
   rows.map((row, i) => {
     [...Array(size)].map((_, j) => {
       let cell = document.createElement("td");
+      cell.setAttribute('id', 'player' + playerId + 'cell' + i + j);
       const selectedNumber = pickRandomFromBingoArray(bingoArray);
       cell.innerHTML = selectedNumber; // <td>{selecterNumber}</td>
       playerBoards["player" + playerId][i][j] = selectedNumber; // Insert selected number row (i) cell (j)
@@ -87,54 +88,69 @@ function pickRandomFromBingoArray(array) {
 
 function generateNumber() {
   let number = pickRandomFromBingoArray(ArrayGlobal);
-  selectedNumnbers.push(number);
+  selectedNumbers.push(number);
   calculateScores();
   document.getElementById('selectedNumbers').innerHTML = selectedNumbers.toString();
   document.getElementById('turnCount').innerHTML = selectedNumbers.length;
+  if(selectedNumbers.length === 25) {
+    let maxScore = 0;
+    let winner = null;
+    Object.keys(playerScores).forEach((player, index) => {
+      if(playerScores[player] > maxScore){
+        maxScore = playerScores[player];
+        winner = index + 1;
+      }
+    });
+    victoriaJugador(winner);
+  }
 }
 
 function calculateScores() {
-  let score = 0;
-  let scorediagonal = 0;
-
   const size = playerBoards.player1.length;
-  let rows =[];
-  let columns = [];
-  let diagonal1 = [];
-  let diagonal2 = [];
-  playerBoards.player1[0];
-  for (let i = 0; i < size; i++) {
-    diagonal1 = playerBoards.player1[i][i];
-    diagonal2 = playerBoards.player1[i][size - 1 - i];
-    rows.push(playerBoards.player1[i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |
-    for (let j = 0; j < size; j++) {
+
+  Object.keys(playerBoards).forEach((player) => {
+    let rows =[];
+    let columns = [];
+    let diagonal1 = [];
+    let diagonal2 = [];
+    for (let i = 0; i < size; i++) {
+      diagonal1.push(playerBoards[player][i][i]);
+      diagonal2.push(playerBoards[player][i][size - 1 - i]);
+      rows.push(playerBoards[player][i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |
       columns[i] = [];
-      columns[i].push(playerBoards.player1[j][i]);
+      for (let j = 0; j < size; j++) {
+        columns[i].push(playerBoards[player][j][i]);
+        if(playerBoards[player][i][j] === selectedNumbers[selectedNumbers.length - 1]){
+          document.getElementById(player+'cell' + i + j).style.textDecoration = "underline";
+          document.getElementById(player+'cell' + i + j).style.backgroundColor = "green";
+        }
+      }
     }
-  }
-  playerScores.player1 = 0;
-  // Lineas
-  rows.forEach((row) => {
-    const hasLine = row.every((cell) => selectedNumbers.includes(cell)) // Every: si todos los elementos cumplen con la condicion devuelve true, sino false
-    if(hasLine) playerScores.player1 += 1;
-  });
+    playerScores[player] = 0;
+    // Lineas
+    rows.forEach((row) => {
+      const hasLine = row.every((cell) => selectedNumbers.includes(cell)) // Every: si todos los elementos cumplen con la condicion devuelve true, sino false
+      if(hasLine) playerScores[player] += 1;
+    });
 
-  // Columnas
-  columns.forEach((row) => {
-    const hasLine = row.every((cell) => selectedNumbers.includes(cell));
-    if(hasLine) playerScores.player1 += 1;
-  });
+    // Columnas
+    columns.forEach((row) => {
+      const hasLine = row.every((cell) => selectedNumbers.includes(cell));
+      if(hasLine) playerScores[player] += 1;
+    });
 
-  // Size * 2 Lleno todas las rows y todas las lineas.
-  if(playerScores.player1 === (size * 2)){
-    victoriaJugador(1);
-  }
+    // Size * 2 Lleno todas las rows y todas las lineas.
+    if(playerScores[player] === (size * 2)){
+      victoriaJugador(1);
+    }
 
-  // Diagonals
-  [diagonal1, diagonal2].forEach((row) => {
-    const hasLine = row.every((cell) => selectedNumbers.includes(cell));
-    if(hasLine) playerScores.player1 += 3;
-  });
+    // Diagonals
+    [diagonal1, diagonal2].forEach((row) => {
+      const hasLine = row.every((cell) => selectedNumbers.includes(cell));
+      if(hasLine) playerScores[player] += 3;
+    });
+    document.getElementById(player+'score').innerHTML = playerScores[player];
+  })
 
 }
 
@@ -144,15 +160,47 @@ function createBingoArray() {
 
 function restart() {
   ArrayGlobal = createBingoArray();
+  playerScores = {
+    player1: 0,
+    player2: 0,
+    player3: 0,
+    player4: 0,
+  };
+  selectedNumbers = [];
+  playerBoards = {
+    player1: [],
+    player2: [],
+    player3: [],
+    player4: [],
+  };
+  document.getElementById('selectedNumbers').innerHTML = '';
+  document.getElementById('turnCount').innerHTML = 0;
+  let bingoContainer = document.querySelector(".bingo-container-init");
+  let bingoGame = document.querySelector(".bingo-game");
+  bingoContainer.style.display = "block";
+  bingoGame.style.display = "none";
+
 }
 
 function victoriaJugador(playerNumber) {
-  const scores = JSON.parse(localStorage.getItem("winScore"));
   const playerId = document.getElementById('player' + playerNumber + 'Name').value;
-  if(!scores[playerId]){
+  if(playerId === '') {
+    alert('Ganó el jugador ' + playerNumber);
+  } else {
+    alert('Ganó' + playerId);
+  }
+  let scores = JSON.parse(localStorage.getItem("winScore"));
+  if(!scores) {
+    scores = {};
+  }
+  if(playerId && !scores[playerId]){
     scores[playerId] = 0;
   }
-  scores[playerId] += 1;
+  if(playerId) {
+    scores[playerId] += 1;
+  } else {
+    scores['player' + playerNumber] += 1;
+  }
   localStorage.setItem("winScore", JSON.stringify(scores));
   restart();
 }
