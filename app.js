@@ -37,7 +37,10 @@ let player2input;
 
 function selectBoardSize(size) {
   let bingoContainer = document.querySelector(".bingo-container-init");
+  let bingoGame = document.querySelector(".bingo-game");
   bingoContainer.style.display = "none";
+  bingoGame.style.display = "block";
+
   createTable(1, size);
   createTable(2, size);
   createTable(3, size);
@@ -103,14 +106,14 @@ function calculateScores() {
   for (let i = 0; i < size; i++) {
     diagonal1 = playerBoards.player1[i][i];
     diagonal2 = playerBoards.player1[i][size - 1 - i];
-    rows.push(playerBoards.player1[i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |  
+    rows.push(playerBoards.player1[i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |
     for (let j = 0; j < size; j++) {
       columns[i] = [];
       columns[i].push(playerBoards.player1[j][i]);
     }
   }
   playerScores.player1 = 0;
-  // Lineas 
+  // Lineas
   rows.forEach((row) => {
     const hasLine = row.every((cell) => selectedNumbers.includes(cell)) // Every: si todos los elementos cumplen con la condicion devuelve true, sino false
     if(hasLine) playerScores.player1 += 1;
@@ -122,17 +125,17 @@ function calculateScores() {
     if(hasLine) playerScores.player1 += 1;
   });
 
-  // Size * 2 Lleno todas las rows y todas las lineas. 
+  // Size * 2 Lleno todas las rows y todas las lineas.
   if(playerScores.player1 === (size * 2)){
     victoriaJugador(1);
   }
 
-  // Diagonals 
+  // Diagonals
   [diagonal1, diagonal2].forEach((row) => {
     const hasLine = row.every((cell) => selectedNumbers.includes(cell));
     if(hasLine) playerScores.player1 += 3;
   });
-  
+
 }
 
 function createBingoArray() {

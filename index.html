@@ -1,91 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Bingo</title>
     <link rel="stylesheet" href="styles.css" />
     <!-- Enlaza tu archivo de estilos CSS si lo tienes -->
     <script src="app.js"></script>
-  </head>
-  <body>
-    <div class="bingo-container-init">
-      <div class="El-Bingo">
+</head>
+<body>
+<div class="bingo-container-init">
+    <div class="El-Bingo">
         <h1>El Bingo</h1>
-      </div>
-      <!-- Sección para ingresar nombres de jugadores -->
-      <div class="player-names">
+    </div>
+    <!-- Sección para ingresar nombres de jugadores -->
+    <div class="player-names">
         <div>
-          <h2 class="player1-title" data-player-number="1">Jugador 1</h2>
-          <input
-            type="text"
-            id="player1Name"
-            placeholder="Nombre del Jugador 1"
-          />
+            <h2 class="player1-title" data-player-number="1">Jugador 1</h2>
+            <input
+                    type="text"
+                    id="player1Name"
+                    placeholder="Nombre del Jugador 1"
+            />
         </div>
         <div>
-          <h2 class="player2-title" data-player-number="2">Jugador 2</h2>
-          <input
-            type="text"
-            id="player2Name"
-            placeholder="Nombre del Jugador 2"
-          />
+            <h2 class="player2-title" data-player-number="2">Jugador 2</h2>
+            <input
+                    type="text"
+                    id="player2Name"
+                    placeholder="Nombre del Jugador 2"
+            />
         </div>
         <div>
-          <h2 class="player3-title" data-player-number="3">Jugador 3</h2>
-          <input
-            type="text"
-            id="player3Name"
-            placeholder="Nombre del Jugador 3"
-          />
+            <h2 class="player3-title" data-player-number="3">Jugador 3</h2>
+            <input
+                    type="text"
+                    id="player3Name"
+                    placeholder="Nombre del Jugador 3"
+            />
         </div>
         <div>
-          <h2 class="player4-title" data-player-number="4">Jugador 4</h2>
-          <input
-            type="text"
-            id="player4Name"
-            placeholder="Nombre del Jugador 4"
-          />
+            <h2 class="player4-title" data-player-number="4">Jugador 4</h2>
+            <input
+                    type="text"
+                    id="player4Name"
+                    placeholder="Nombre del Jugador 4"
+            />
         </div>
-      </div>
-      <button id="startButton" onclick="iniciarBingo()">Iniciar Juego</button>
-      <div class="seccion_bottom">
+    </div>
+    <button id="startButton" onclick="iniciarBingo()">Iniciar Juego</button>
+    <div class="seccion_bottom">
         <div class="Reset-game">
-          <button id="Reset-game">Reiniciar</button>
+            <button id="Reset-game">Reiniciar</button>
         </div>
         <!-- Botones para elegir el tamaño del cartón -->
         <div class="board-size">
-          <h2>Elegir Tamaño del Cartón</h2>
-          <button id="size3" onclick="selectBoardSize(3)">3x3</button>
-          <button id="size4" onclick="selectBoardSize(4)">4x4</button>
-          <button id="size5" onclick="selectBoardSize(5)">5x5</button>
+            <h2>Elegir Tamaño del Cartón</h2>
+            <button id="size3" onclick="selectBoardSize(3)">3x3</button>
+            <button id="size4" onclick="selectBoardSize(4)">4x4</button>
+            <button id="size5" onclick="selectBoardSize(5)">5x5</button>
         </div>
 
-        <div class="turn-counter">
-          <button onclick="generateNumber()">Sacar bolita</button>
-          <h2>Contador de Turnos:</h2>
-          <p id="turnCount">0</p>
-        </div>
-      </div>
     </div>
-    <div class="bingo-game" >
-      <h2 id="player-title-1">Jugador 1</h2>
-      <table id="tablePlayer1"></table>
-      <h2 id="player-title-2">Jugador 2</h2>
-      <table id="tablePlayer2"></table>
-      <h2 id="player-title-3">Jugador 3</h2>
-      <table id="tablePlayer3"></table>
-      <h2 id="player-title-4">Jugador 4</h2>
-      <table id="tablePlayer4"></table>
+</div>
+<div class="bingo-game" style="display: none">
+    <h2 id="player-title-1">Jugador 1</h2>
+    <table id="tablePlayer1"></table>
+    <h2 id="player-title-2">Jugador 2</h2>
+    <table id="tablePlayer2"></table>
+    <h2 id="player-title-3">Jugador 3</h2>
+    <table id="tablePlayer3"></table>
+    <h2 id="player-title-4">Jugador 4</h2>
+    <table id="tablePlayer4"></table>
 
-      <div class="turn-counter">
+    <div class="turn-counter">
         <h4>Numeros Seleccionados</h4>
         <p id="selectedNumbers"></p>
         <button onclick="generateNumber()">Sacar bolita</button>
         <h2>Contador de Turnos:</h2>
         <p id="turnCount">0</p>
-      </div>
-
     </div>
-  </body>
+
+</div>
+</body>
 </html>
