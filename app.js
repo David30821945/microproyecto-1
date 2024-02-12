@@ -20,7 +20,7 @@ let selectedNumbers = [];
 // ========================================
 
 function iniciarBingo() {
-  if (document.getElementById("player1Name").value != "" && document.getElementById("player2Name").value != "" && document.getElementById("player3Name").value != "" && document.getElementById("player4Name").value != ""){
+  if (document.getElementById("player1Name").value != "" && document.getElementById("player2Name").value != "" && document.getElementById("player3Name").value != "" && document.getElementById("player4Name").value != "" && document.getElementById("player4Name").value != document.getElementById("player2Name").value != document.getElementById("player3Name").value != document.getElementById("player1Name").value){
   player1Input = document.getElementById("player1Name").value;
   document.getElementById("player1Input").innerHTML = player1Input;
 

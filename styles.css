@@ -81,8 +81,9 @@ table td {
 .board-size {
   display: none;
 }
-table {
+.table {
   border: 1px solid black;
+  align-items: baseline;
   margin-bottom: 10px;
 }
 
@@ -97,4 +98,17 @@ table {
   margin-bottom: 3px;
   font-weight: 400;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: 100px [Line1] 100px [Line2] 100px [Line3] 100px [Line4];
+  grid-template-columns: 100px 100px 100px 100px;
+  grid-gap: 5px;
+}
+.bingo-container-init{
+  text-align: center;
+  justify-content: space-between;
+  grid-column: 1 / span 4;
+  grid-row: 1 / Line2; 
 }
