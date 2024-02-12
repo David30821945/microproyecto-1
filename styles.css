@@ -88,6 +88,10 @@ table {
 
 
 .bingo-game h2 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3 px;
+  align-items: center;
   font-size: 20px;
   font-style: italic;
   margin-bottom: 3px;

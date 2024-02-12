@@ -14,6 +14,12 @@
         <h1>El Bingo</h1>
     </div>
     <!-- Sección para ingresar nombres de jugadores -->
+    <table id="VictoryTable">
+      <tr>
+        <td>name</td>
+        <td>score</td>
+      </tr>
+    </table>
     <div class="player-names">
         <div>
             <h2 class="player1-title" data-player-number="1">Jugador 1</h2>
@@ -50,9 +56,7 @@
     </div>
     <button id="startButton" onclick="iniciarBingo()">Iniciar Juego</button>
     <div class="seccion_bottom">
-        <div class="Reset-game">
-            <button id="Reset-game">Reiniciar</button>
-        </div>
+        
         <!-- Botones para elegir el tamaño del cartón -->
         <div class="board-size">
             <h2>Elegir Tamaño del Cartón</h2>
@@ -64,13 +68,13 @@
     </div>
 </div>
 <div class="bingo-game" style="display: none">
-    <h2 id="player-title-1">Jugador 1 Score: <span id="player1score"></span></h2>
+    <h2 id="player-title-1"><span id="player1Input"></span> Score: <span id="player1score"></span></h2>
     <table id="tablePlayer1"></table>
-    <h2 id="player-title-2">Jugador 2 Score: <span id="player2score"></span></h2>
+    <h2 id="player-title-2"><span id="player2Input"></span> Score: <span id="player2score"></span></h2>
     <table id="tablePlayer2"></table>
-    <h2 id="player-title-3">Jugador 3 Score: <span id="player3score"></span></h2>
+    <h2 id="player-title-3"><span id="player3Input"></span> Score: <span id="player3score"></span></h2>
     <table id="tablePlayer3"></table>
-    <h2 id="player-title-4">Jugador 4 Score: <span id="player4score"></span></h2>
+    <h2 id="player-title-4"><span id="player4Input"></span> Score: <span id="player4score"></span></h2>
     <table id="tablePlayer4"></table>
 
     <div class="turn-counter">
@@ -79,7 +83,11 @@
         <button onclick="generateNumber()">Sacar bolita</button>
         <h2>Contador de Turnos:</h2>
         <p id="turnCount">0</p>
+
     </div>
+    <div class="Reset-game">
+      <button id="Reset-game"onclick="restart()">Reiniciar</button>
+  </div>
 
 </div>
 </body>

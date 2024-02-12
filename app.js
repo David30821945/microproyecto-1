@@ -20,18 +20,40 @@ let selectedNumbers = [];
 // ========================================
 
 function iniciarBingo() {
+  if (document.getElementById("player1Name").value != "" && document.getElementById("player2Name").value != "" && document.getElementById("player3Name").value != "" && document.getElementById("player4Name").value != ""){
+  player1Input = document.getElementById("player1Name").value;
+  document.getElementById("player1Input").innerHTML = player1Input;
+
+  player2Input = document.getElementById("player2Name").value;
+  document.getElementById("player2Input").innerHTML = player2Input;
+
+  player3Input = document.getElementById("player3Name").value;
+  document.getElementById("player3Input").innerHTML = player3Input;
+
+  player4Input = document.getElementById("player4Name").value;
+  document.getElementById("player4Input").innerHTML = player4Input;
+
   const startButton = document.getElementById("startButton");
   startButton.style.display = "none";
   const boardSizeSection = document.querySelector(".board-size");
   boardSizeSection.style.display = "block";
+  }else{
+    alert("Debe llenar todos los nombres");
+  }
 }
 
-let player1Title = document.querySelectorAll(".player1-title");
+function showplayer1(){
+  return player1Input;
+}
+
+let player1Title = document.querySelectorAll(".player-title-1");
 let player2Title = document.querySelectorAll(".player2-title");
 let player3Title = document.querySelectorAll(".player3-title");
 let player4Title = document.querySelectorAll(".player4-title");
 let player1Input;
 let player2input;
+let player3Input;
+let player4Input;
 
 // startButton.addEventListener('click', iniciarBingo);
 
@@ -50,7 +72,7 @@ function selectBoardSize(size) {
 function createTable(playerId, size) {
   playerBoards["player" + playerId] = [...Array(size)].map(() =>
     [...Array(size)].map(() => null)
-  ); // [ [null, null, null, null] <-- size ]
+  ); // [ [null, null, null, null] <-- size ] <---
   const table = document.getElementById("tablePlayer" + playerId);
   const bingoArray = createBingoArray();
   const rows = [...Array(size)].map(() => {
@@ -63,7 +85,7 @@ function createTable(playerId, size) {
       let cell = document.createElement("td");
       cell.setAttribute('id', 'player' + playerId + 'cell' + i + j);
       const selectedNumber = pickRandomFromBingoArray(bingoArray);
-      cell.innerHTML = selectedNumber; // <td>{selecterNumber}</td>
+      cell.innerHTML = selectedNumber; // <td>{selectedNumber}</td>
       playerBoards["player" + playerId][i][j] = selectedNumber; // Insert selected number row (i) cell (j)
       row.appendChild(cell);
     });
@@ -116,7 +138,7 @@ function calculateScores() {
     for (let i = 0; i < size; i++) {
       diagonal1.push(playerBoards[player][i][i]);
       diagonal2.push(playerBoards[player][i][size - 1 - i]);
-      rows.push(playerBoards[player][i]); // | 1 , 2 , 3| | 4, 5, 6 | | 7, 8, 9 |
+      rows.push(playerBoards[player][i]);
       columns[i] = [];
       for (let j = 0; j < size; j++) {
         columns[i].push(playerBoards[player][j][i]);
@@ -160,6 +182,7 @@ function createBingoArray() {
 
 function restart() {
   ArrayGlobal = createBingoArray();
+ 
   playerScores = {
     player1: 0,
     player2: 0,
@@ -184,11 +207,9 @@ function restart() {
 
 function victoriaJugador(playerNumber) {
   const playerId = document.getElementById('player' + playerNumber + 'Name').value;
-  if(playerId === '') {
-    alert('Ganó el jugador ' + playerNumber);
-  } else {
-    alert('Ganó' + playerId);
-  }
+  
+  alert('Ganó' +" "+ playerId);
+  
   let scores = JSON.parse(localStorage.getItem("winScore"));
   if(!scores) {
     scores = {};
@@ -202,5 +223,21 @@ function victoriaJugador(playerNumber) {
     scores['player' + playerNumber] += 1;
   }
   localStorage.setItem("winScore", JSON.stringify(scores));
+  let local=0;
+  const tabled = document.getElementById("VictoryTable");
+
+
+  const rowd = document.createElement("tr");
+          tabled.appendChild(rowd);
+          let cell = document.createElement("td");
+          cell.setAttribute("id", scores[playerId]);
+
+          rowd.appendChild(cell);
+          let celld = document.createElement("td");
+          celld.setAttribute("id", scores[playerId].toString());
+          rowd.appendChild(celld);
+          cell.innerHTML=playerId;
+          celld.innerHTML=scores[playerId].toString();
+
   restart();
 }
